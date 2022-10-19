@@ -1,11 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../store/UserContext";
 
 const SignIn = () => {
   const [error, setError] = useState("");
   const { signIn } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const signInFormSubmitHandler = (event) => {
     event.preventDefault();
@@ -15,17 +17,14 @@ const SignIn = () => {
     const signInForm = event.target;
     const email = signInForm.email.value;
     const password = signInForm.password.value;
-    console.log(email, password);
 
     signIn(email, password)
       .then(({ user }) => {
-        console.log(user);
         setError("");
         signInForm.reset();
-        navigate("/available-rooms");
+        navigate(from, { replace: true });
       })
       .catch((error) => {
-        console.log(error.message);
         setError(error.message);
       });
   };

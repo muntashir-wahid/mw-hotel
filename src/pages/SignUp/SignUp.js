@@ -7,7 +7,7 @@ const SignUp = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const { createUser } = useContext(AuthContext);
+  const { createUser, signInWithGoogle } = useContext(AuthContext);
 
   const signUpFormSubmitHandler = (event) => {
     event.preventDefault();
@@ -39,6 +39,14 @@ const SignUp = () => {
         console.log(user);
         setError("");
         signUpForm.reset();
+        navigate("/available-rooms");
+      })
+      .catch((error) => console.error(error));
+  };
+
+  const signInWithGoogleHandler = () => {
+    signInWithGoogle()
+      .then(() => {
         navigate("/available-rooms");
       })
       .catch((error) => console.error(error));
@@ -108,7 +116,10 @@ const SignUp = () => {
             </div>
             <div className="divider">Or Sign up with</div>
             <div className="grid  place-items-center">
-              <button className="btn btn-outline btn-primary">
+              <button
+                onClick={signInWithGoogleHandler}
+                className="btn btn-outline btn-primary"
+              >
                 <FcGoogle />
               </button>
             </div>

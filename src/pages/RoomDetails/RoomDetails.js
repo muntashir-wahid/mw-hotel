@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../../store/UserContext";
 import "react-toastify/dist/ReactToastify.css";
@@ -7,12 +7,15 @@ import "react-toastify/dist/ReactToastify.css";
 const RoomDetails = () => {
   const { user, logOut } = useContext(AuthContext);
   const data = useLoaderData();
+  const navigate = useNavigate();
 
   const { name, picture, about, bed, capacity, perNight } = data;
 
   const signOutHandler = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        navigate("/");
+      })
       .catch((error) => console.error(error));
   };
 
