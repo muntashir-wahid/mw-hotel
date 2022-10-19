@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../store/UserContext";
 
 const SignIn = () => {
-  const { user } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const { user, signIn } = useContext(AuthContext);
 
-  console.log(user);
+  // console.log(user);
 
   const signInFormSubmitHandler = (event) => {
     event.preventDefault();
@@ -16,6 +17,17 @@ const SignIn = () => {
     const email = signInForm.email.value;
     const password = signInForm.password.value;
     console.log(email, password);
+
+    signIn(email, password)
+      .then(({ user }) => {
+        console.log(user);
+        setError("");
+        signInForm.reset();
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setError(error.message);
+      });
   };
 
   return (
@@ -35,6 +47,7 @@ const SignIn = () => {
                 name="email"
                 placeholder="email"
                 className="input input-bordered"
+                required
               />
             </div>
             <div className="form-control">
@@ -46,8 +59,10 @@ const SignIn = () => {
                 name="password"
                 placeholder="password"
                 className="input input-bordered"
+                required
               />
             </div>
+            {error && <p className="mt-3 text-red-700">{error}</p>}
             <label className="label">
               <button type="button" className="label-text-alt link link-hover">
                 Forgot password?
