@@ -6,7 +6,11 @@ import SignUp from "../pages/SignUp/SignUp";
 
 const routes = createBrowserRouter([
   { path: "/", element: <Hero /> },
-  { path: "available-rooms", element: <AvailableRooms /> },
+  {
+    path: "available-rooms",
+    element: <AvailableRooms />,
+    loader: () => fetch("/hotel-data/available-rooms.json"),
+  },
   { path: "signin", element: <SignIn /> },
   { path: "signup", element: <SignUp /> },
 ]);
