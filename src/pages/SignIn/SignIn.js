@@ -4,9 +4,7 @@ import { AuthContext } from "../../store/UserContext";
 
 const SignIn = () => {
   const [error, setError] = useState("");
-  const { user, signIn } = useContext(AuthContext);
-
-  // console.log(user);
+  const { signIn } = useContext(AuthContext);
 
   const signInFormSubmitHandler = (event) => {
     event.preventDefault();

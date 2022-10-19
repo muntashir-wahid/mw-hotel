@@ -1,12 +1,14 @@
 import React from "react";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import AvailableRoom from "../../components/AvailableRoom/AvailableRoom";
 
 const AvailableRooms = () => {
   const availableRooms = useLoaderData();
+  const navigate = useNavigate();
 
   const showRoomDetailsHandler = (id) => {
     console.log(id);
+    navigate(`/room-details/${id}`);
   };
 
   return (
