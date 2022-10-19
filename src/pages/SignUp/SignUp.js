@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { AuthContext } from "../../store/UserContext";
 
 const SignUp = () => {
+  const [error, setError] = useState("");
+
+  const { createUser } = useContext(AuthContext);
+
   const signUpFormSubmitHandler = (event) => {
     event.preventDefault();
 
@@ -13,6 +18,28 @@ const SignUp = () => {
     const password = signUpForm.password.value;
     const confirmedPassword = signUpForm.confirm.value;
     console.log(email, password, confirmedPassword);
+
+    // Some simple validation
+
+    if (password.trim().length < 6) {
+      setError("Your passord should be 6 charecters long at least");
+      return;
+    }
+
+    if (password !== confirmedPassword) {
+      setError("Password did not match.Try again!");
+      return;
+    }
+
+    // Create new user
+
+    createUser(email, password)
+      .then(({ user }) => {
+        console.log(user);
+        setError("");
+        signUpForm.reset();
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -32,6 +59,7 @@ const SignUp = () => {
                 name="email"
                 placeholder="email"
                 className="input input-bordered"
+                required
               />
             </div>
             <div className="form-control">
@@ -43,6 +71,7 @@ const SignUp = () => {
                 name="password"
                 placeholder="password"
                 className="input input-bordered"
+                required
               />
             </div>
             <div className="form-control">
@@ -54,6 +83,7 @@ const SignUp = () => {
                 name="confirm"
                 placeholder="confirm password"
                 className="input input-bordered"
+                required
               />
             </div>
 
@@ -62,6 +92,7 @@ const SignUp = () => {
                 Signin
               </button>
             </div>
+            {error && <p className="mt-3 text-red-600">{error}</p>}
           </form>
 
           <div className="flex flex-col w-full">

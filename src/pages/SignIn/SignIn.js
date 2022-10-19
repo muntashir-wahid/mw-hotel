@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../store/UserContext";
 
 const SignIn = () => {
+  const { user } = useContext(AuthContext);
+
+  console.log(user);
+
   const signInFormSubmitHandler = (event) => {
     event.preventDefault();
 
