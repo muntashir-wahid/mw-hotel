@@ -7,7 +7,6 @@ const AvailableRooms = () => {
   const navigate = useNavigate();
 
   const showRoomDetailsHandler = (id) => {
-    console.log(id);
     navigate(`/room-details/${id}`);
   };
 

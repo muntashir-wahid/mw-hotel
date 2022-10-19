@@ -1,10 +1,11 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { AuthContext } from "../../store/UserContext";
 
 const SignUp = () => {
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const { createUser } = useContext(AuthContext);
 
@@ -38,6 +39,7 @@ const SignUp = () => {
         console.log(user);
         setError("");
         signUpForm.reset();
+        navigate("/available-rooms");
       })
       .catch((error) => console.error(error));
   };

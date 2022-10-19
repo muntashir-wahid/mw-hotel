@@ -15,7 +15,11 @@ const routes = createBrowserRouter([
   },
   {
     path: "room-details/:roomId",
-    element: <PrivateRoute />,
+    element: (
+      <PrivateRoute>
+        <RoomDetails />
+      </PrivateRoute>
+    ),
     loader: ({ params }) =>
       fetch(`/hotel-data/room-details/${params.roomId}.json`),
   },

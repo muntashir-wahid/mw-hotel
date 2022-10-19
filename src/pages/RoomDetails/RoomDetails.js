@@ -1,13 +1,45 @@
 import React, { useContext } from "react";
+import { useLoaderData } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 import { AuthContext } from "../../store/UserContext";
+import "react-toastify/dist/ReactToastify.css";
 
-const RoomDetails = ({ data }) => {
-  const { user } = useContext(AuthContext);
+const RoomDetails = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const data = useLoaderData();
 
   const { name, picture, about, bed, capacity, perNight } = data;
 
+  const signOutHandler = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.error(error));
+  };
+
+  const bookingConfirmHandler = () => {
+    toast.success("Congratulations!Booking confirm", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
+
   return (
-    <div className="mt-20">
+    <div className="mt-5">
+      <div className="mb-20 flex flex-col items-end p-6">
+        <p className="border p-2 mb-2">{user.email}</p>
+        <button
+          onClick={signOutHandler}
+          className="btn btn-outline btn-primary"
+        >
+          Sign Out
+        </button>
+      </div>
       <h2 className="text-center text-3xl font-semibold mb-16">
         Details about {name}
       </h2>
@@ -24,7 +56,10 @@ const RoomDetails = ({ data }) => {
             <p>Per Night: {perNight}</p>
           </div>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Listen</button>
+            <button onClick={bookingConfirmHandler} className="btn btn-primary">
+              Book Now
+            </button>
+            <ToastContainer />
           </div>
         </div>
       </div>
