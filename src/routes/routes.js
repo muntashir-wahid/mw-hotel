@@ -4,6 +4,7 @@ import Hero from "../pages/Hero/Hero";
 import RoomDetails from "../pages/RoomDetails/RoomDetails";
 import SignIn from "../pages/SignIn/SignIn";
 import SignUp from "../pages/SignUp/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
 const routes = createBrowserRouter([
   { path: "/", element: <Hero /> },
@@ -14,7 +15,7 @@ const routes = createBrowserRouter([
   },
   {
     path: "room-details/:roomId",
-    element: <RoomDetails />,
+    element: <PrivateRoute />,
     loader: ({ params }) =>
       fetch(`/hotel-data/room-details/${params.roomId}.json`),
   },

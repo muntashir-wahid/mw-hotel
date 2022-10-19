@@ -1,8 +1,9 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useContext } from "react";
+import { AuthContext } from "../../store/UserContext";
 
-const RoomDetails = () => {
-  const data = useLoaderData();
+const RoomDetails = ({ data }) => {
+  const { user } = useContext(AuthContext);
+
   const { name, picture, about, bed, capacity, perNight } = data;
 
   return (
